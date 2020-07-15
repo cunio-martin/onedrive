@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  onedrive:
+    build:
+      context: "https://github.com/abraunegg/onedrive.git"
+      dockerfile: contrib/docker/Dockerfile-rpi # dockerfile relative to repo root
+    environment:
+      - ONEDRIVE_UID=${PUID}
+      - ONEDRIVE_GID=${PGID}
+      - TZ=${TZ}
+      # - ONEDRIVE_RESYNC=1 # Forget the last saved state, perform a full sync
+      - ONEDRIVE_VERBOSE=1 # Print more details
+      # - ONEDRIVE_DEBUG=1 # Print even more details, useful for debugging
+    restart: always
+    volumes:
+      - ${ONEDRIVE_CONFIG_DIR}:/onedrive/conf
+      - ${ONEDRIVE_DIR}:/onedrive/data
